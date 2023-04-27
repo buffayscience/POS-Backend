@@ -11,4 +11,4 @@ import com.capstone.pos.response.ValidationResponseModel;
 @RestController
 public class ProgramOfStudyValidationController {
 
-}
+    }

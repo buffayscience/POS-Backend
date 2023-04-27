@@ -11,5 +11,5 @@ import com.capstone.pos.model.CourseModel;
 public interface CourseModelRepository extends JpaRepository<CourseModel,String> {
 
     @Query("SELECT cm FROM CourseModel cm WHERE cm.departmentCode    = :deptCode")
-    List<CourseModel> findByDepartmentCode(@Param("deptCode") int deptCode);
+    List<CourseModel> findByDepartmentCode(@Param("deptCode") String deptCode);
 }

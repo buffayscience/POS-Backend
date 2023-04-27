@@ -16,7 +16,7 @@ public class CourseModel {
     private int courseLevel;
     private int maxCredits;
     private int minCredits;
-    private int departmentCode;
+    private String departmentCode;
 
  
 
@@ -68,11 +68,11 @@ public class CourseModel {
         this.minCredits = minCredits;
     }
 
-    public int getDepartmentCode() {
+    public String getDepartmentCode() {
         return departmentCode;
     }
 
-    public void setDepartmentCode(int departmentCode) {
+    public void setDepartmentCode(String departmentCode) {
         this.departmentCode = departmentCode;
     }
 

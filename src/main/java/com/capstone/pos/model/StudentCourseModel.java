@@ -5,7 +5,7 @@ public class StudentCourseModel {
     private int area; // 1 for major // 2 for minor and 3 for math/quant
     private boolean isMastersCourse;
     private boolean isMathCourse;
-    private int department;
+    private String department;
     private String courseName;
     private String courseNumber;
     private int courseLevel;
@@ -36,11 +36,11 @@ public class StudentCourseModel {
         this.isMathCourse = isMathCourse;
     }
 
-    public int getDepartment() {
+    public String getDepartment() {
         return department;
     }
 
-    public void setDepartment(int department) {
+    public void setDepartment(String department) {
         this.department = department;
     }
 
