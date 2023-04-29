@@ -13,5 +13,12 @@ public class ProgramOfStudy {
         this.courses = courses;
     }
 
+    @Override
+    public String toString() {
+        return "ProgramOfStudy [courses=" + courses + "]";
+    }
+
+    
+
     
 }

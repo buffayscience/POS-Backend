@@ -5,9 +5,8 @@ public class StudentCourseModel {
     private int area; // 1 for major // 2 for minor and 3 for math/quant
     private boolean isMastersCourse;
     private boolean isMathCourse;
-    private String department;
     private String courseName;
-    private String courseNumber;
+    private String courseId;
     private int courseLevel;
     private boolean isUWMCourse;
     private int credits;
@@ -36,14 +35,6 @@ public class StudentCourseModel {
         this.isMathCourse = isMathCourse;
     }
 
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
-
     public String getCourseName() {
         return courseName;
     }
@@ -52,12 +43,12 @@ public class StudentCourseModel {
         this.courseName = courseName;
     }
 
-    public String getCourseNumber() {
-        return courseNumber;
+    public String getCourseId() {
+        return courseId;
     }
 
-    public void setCourseNumber(String courseNumber) {
-        this.courseNumber = courseNumber;
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
     public int getCourseLevel() {
@@ -83,5 +74,13 @@ public class StudentCourseModel {
     public void setCredits(int credits) {
         this.credits = credits;
     }
+
+    @Override
+    public String toString() {
+        return "StudentCourseModel [area=" + area + ", isMastersCourse=" + isMastersCourse + ", isMathCourse="
+                + isMathCourse + ", courseName=" + courseName + ", courseId=" + courseId + ", courseLevel="
+                + courseLevel + ", isUWMCourse=" + isUWMCourse + ", credits=" + credits + "]";
+    }
+    
 
 }

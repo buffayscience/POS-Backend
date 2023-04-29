@@ -1,5 +1,6 @@
 package com.capstone.pos.controller;
 
+import java.io.Console;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,7 @@ public class CourseController {
         boolean hasEthicsCourse = false;
         int num700LevelCredits = 0;
         int mastersCredits = 0;
+        StringBuilder message = new StringBuilder();
         ValidationResponseModel responseModel = new ValidationResponseModel();
         // Validate credits for each section
         for (StudentCourseModel course : programOfStudy.getCourses()) {
@@ -76,6 +78,7 @@ public class CourseController {
 
             if (course.getArea() == MAJOR) {
                 majorCredits += course.getCredits();
+                System.out.println(course.getCourseName());
             } else if (course.getArea() == MINOR) {
                 minorCredits += course.getCredits();
             } else if (course.getArea() == MATH) {
@@ -97,50 +100,63 @@ public class CourseController {
         if (totalCredits < 66) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("Total credits must be atleast 66");
-            return responseModel;
+            message.append("Total credits must be atleast 66");
+            // return responseModel;
         }
+        message.append("/n");
 
         // Check major area credits
         if (majorCredits < 21) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("At least 21 credits must be in the major area");
-            return responseModel;
+            message.append("At least 21 credits must be in the major area");
+            // return responseModel;
 
         }
+        message.append("/n");
 
         // Check minor area credits
         if (minorCredits < 9) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("At least 9 credits must be in the minor area");
-            return responseModel;
+            message.append("At least 9 credits must be in the minor area");
+            // return responseModel;
         }
+        message.append("/n");
 
         // Check math/quantitative methods credits
         if (mathCredits < 6) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("At least 6 credits must be in math/quantitative methods");
-            return responseModel;
+            message.append("At least 6 credits must be in math/quantitative methods");
+            // return responseModel;
         }
+        message.append("/n");
 
         // Check for ethics course
         if (!hasEthicsCourse) {
             responseModel.setStatusCode(400);
             responseModel
                     .setErrorMessage("Must have completed the Ethics and Engineering Communication course (xxx700)");
-            return responseModel;
+                    message.append("Must have completed the Ethics and Engineering Communication course (xxx700)");
+            // return responseModel;
 
         }
-
+        message.append("/n");
         if (mastersCredits > 33) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("Only upto 33 credits can be transferred from Master's Program");
+            message.append("Only upto 33 credits can be transferred from Master's Program");
         }
+        message.append("/n");
 
         if (num700LevelCredits < 26) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("At least 26 credits must be at the 700 level or higher");
-            return responseModel;
+            message.append("At least 26 credits must be at the 700 level or higher");
+            // return responseModel;
         }
+        message.append("/n");
 
         // // Check GPA in each area
         // if (programOfStudy.getMajorGPA() < 3.0 || programOfStudy.getMinorGPA() < 3.0
@@ -161,9 +177,12 @@ public class CourseController {
         // return ResponseEntity.badRequest().body("Invalid minor area: " +
         // programOfStudy.getMinorArea());
         // }
+        responseModel.setStatusCode(400);
+        responseModel.setErrorMessage(message.toString());
 
-        responseModel.setStatusCode(200);
-        responseModel.setErrorMessage("Program of Study form fulfills all credit requirement");
+        // responseModel.setStatusCode(200);
+        // responseModel.setErrorMessage("Program of Study form fulfills all credit requirement");
+
         return responseModel;
 
     }
