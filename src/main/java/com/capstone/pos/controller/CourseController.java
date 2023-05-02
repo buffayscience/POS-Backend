@@ -55,7 +55,11 @@ public class CourseController {
 
     final int MAJOR = 1;
     final int MINOR = 2;
-    final int MATH = 3;
+    final int APPROVEDELECTIVES = 3;
+    final int MATH = 4;
+    final int OTHERCOURSES = 5;
+    final int DOCTORALTHESIS = 6;
+    final String SEMINAR = "COMPSCI870";
 
     @PostMapping("/validate")
     public ValidationResponseModel validateProgramOfStudy(@RequestBody ProgramOfStudy programOfStudy) {
@@ -63,13 +67,16 @@ public class CourseController {
         int majorCredits = 0;
         int minorCredits = 0;
         int mathCredits = 0;
-        boolean hasEthicsCourse = false;
+        boolean hasseminarCourse = false;
         int num700LevelCredits = 0;
         int mastersCredits = 0;
+        int approvedElectivesCredits = 0;
         StringBuilder message = new StringBuilder();
         ValidationResponseModel responseModel = new ValidationResponseModel();
         // Validate credits for each section
         for (StudentCourseModel course : programOfStudy.getCourses()) {
+            System.out.println(course.toString());
+
             // if (!isValidCourseCode(course.getCode())) {
             // return ResponseEntity.badRequest().body("Invalid course code: " +
             // course.getCode());
@@ -78,17 +85,23 @@ public class CourseController {
 
             if (course.getArea() == MAJOR) {
                 majorCredits += course.getCredits();
-                System.out.println(course.getCourseName());
             } else if (course.getArea() == MINOR) {
                 minorCredits += course.getCredits();
-            } else if (course.getArea() == MATH) {
+            } else if (course.getArea() == MATH || course.isMathCourse()) {
                 mathCredits += course.getCredits();
+            }else if(course.getArea() == APPROVEDELECTIVES){
+                approvedElectivesCredits += course.getCredits();
             }
             // Check for 700 level or higher courses
 
-            if (course.getCourseLevel() >= 700 && course.getCourseLevel() < 800) {
+            if (course.getCourseLevel() >= 700 && course.getCourseLevel() < 800 && course.getArea()!=6) {
                 num700LevelCredits += course.getCredits();
             }
+
+            if(course.getCourseId().equals(SEMINAR))
+                {
+                    hasseminarCourse = true;
+                }
 
             if (course.isMastersCourse()) {
                 mastersCredits += course.getCredits();
@@ -97,6 +110,7 @@ public class CourseController {
         }
 
         // Check total credit hours
+        // This is the basic check that needs to be satisfied first return here if check fails
         if (totalCredits < 66) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("Total credits must be atleast 66");
@@ -134,7 +148,8 @@ public class CourseController {
         message.append("/n");
 
         // Check for ethics course
-        if (!hasEthicsCourse) {
+        if (!hasseminarCourse) {
+
             responseModel.setStatusCode(400);
             responseModel
                     .setErrorMessage("Must have completed the Ethics and Engineering Communication course (xxx700)");
@@ -153,7 +168,7 @@ public class CourseController {
         if (num700LevelCredits < 26) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("At least 26 credits must be at the 700 level or higher");
-            message.append("At least 26 credits must be at the 700 level or higher");
+            message.append("At least 26 credits excluding dissertation must be at the 700 level or higher");
             // return responseModel;
         }
         message.append("/n");
@@ -180,6 +195,9 @@ public class CourseController {
         responseModel.setStatusCode(400);
         responseModel.setErrorMessage(message.toString());
 
+        if(message.isEmpty()){
+            message = message.append("Sucess!!!");
+        }
         // responseModel.setStatusCode(200);
         // responseModel.setErrorMessage("Program of Study form fulfills all credit requirement");
 

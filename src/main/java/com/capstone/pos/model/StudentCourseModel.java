@@ -10,6 +10,8 @@ public class StudentCourseModel {
     private int courseLevel;
     private boolean isUWMCourse;
     private int credits;
+    private int year;
+    private String term;
 
     public int getArea() {
         return area;
@@ -75,12 +77,33 @@ public class StudentCourseModel {
         this.credits = credits;
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getTerm() {
+        return term;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
+    }
+
     @Override
     public String toString() {
         return "StudentCourseModel [area=" + area + ", isMastersCourse=" + isMastersCourse + ", isMathCourse="
                 + isMathCourse + ", courseName=" + courseName + ", courseId=" + courseId + ", courseLevel="
-                + courseLevel + ", isUWMCourse=" + isUWMCourse + ", credits=" + credits + "]";
+                + courseLevel + ", isUWMCourse=" + isUWMCourse + ", credits=" + credits + ", year=" + year + ", term="
+                + term + "]";
     }
+
+    
+
+   
     
 
 }
