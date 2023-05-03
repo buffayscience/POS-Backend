@@ -67,6 +67,7 @@ public class CourseController {
         int majorCredits = 0;
         int minorCredits = 0;
         int mathCredits = 0;
+        int thesisCredits = 0;
         boolean hasseminarCourse = false;
         int num700LevelCredits = 0;
         int mastersCredits = 0;
@@ -75,6 +76,7 @@ public class CourseController {
         ValidationResponseModel responseModel = new ValidationResponseModel();
         // Validate credits for each section
         for (StudentCourseModel course : programOfStudy.getCourses()) {
+            System.out.println("master boolean value"+course.getIsMastersCourse());
             System.out.println(course.toString());
 
             // if (!isValidCourseCode(course.getCode())) {
@@ -83,12 +85,17 @@ public class CourseController {
             // }
             totalCredits += course.getCredits();
 
-            if (course.getArea() == MAJOR) {
-                majorCredits += course.getCredits();
-            } else if (course.getArea() == MINOR) {
-                minorCredits += course.getCredits();
-            } else if (course.getArea() == MATH || course.isMathCourse()) {
+            if (course.getArea() == MATH || course.getIsMathCourse() == 1) {
                 mathCredits += course.getCredits();
+            }
+
+            if(course.getArea() == DOCTORALTHESIS){
+                thesisCredits+=course.getCredits();
+            }
+                if (course.getArea() == MINOR) {
+                minorCredits += course.getCredits();
+            } else if (course.getArea() == MAJOR) {
+                majorCredits += course.getCredits();
             }else if(course.getArea() == APPROVEDELECTIVES){
                 approvedElectivesCredits += course.getCredits();
             }
@@ -103,7 +110,7 @@ public class CourseController {
                     hasseminarCourse = true;
                 }
 
-            if (course.isMastersCourse()) {
+            if (course.getIsMastersCourse() ==1) {
                 mastersCredits += course.getCredits();
             }
 
@@ -117,7 +124,7 @@ public class CourseController {
             message.append("Total credits must be atleast 66");
             // return responseModel;
         }
-        message.append("/n");
+         
 
         // Check major area credits
         if (majorCredits < 21) {
@@ -127,7 +134,7 @@ public class CourseController {
             // return responseModel;
 
         }
-        message.append("/n");
+         
 
         // Check minor area credits
         if (minorCredits < 9) {
@@ -136,7 +143,7 @@ public class CourseController {
             message.append("At least 9 credits must be in the minor area");
             // return responseModel;
         }
-        message.append("/n");
+         
 
         // Check math/quantitative methods credits
         if (mathCredits < 6) {
@@ -145,25 +152,25 @@ public class CourseController {
             message.append("At least 6 credits must be in math/quantitative methods");
             // return responseModel;
         }
-        message.append("/n");
+         
 
         // Check for ethics course
         if (!hasseminarCourse) {
 
             responseModel.setStatusCode(400);
             responseModel
-                    .setErrorMessage("Must have completed the Ethics and Engineering Communication course (xxx700)");
-                    message.append("Must have completed the Ethics and Engineering Communication course (xxx700)");
+                    .setErrorMessage("Must have completed the Seminar Course");
+                    message.append("Must have completed the Seminar Course");
             // return responseModel;
 
         }
-        message.append("/n");
+         
         if (mastersCredits > 33) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("Only upto 33 credits can be transferred from Master's Program");
             message.append("Only upto 33 credits can be transferred from Master's Program");
         }
-        message.append("/n");
+         
 
         if (num700LevelCredits < 26) {
             responseModel.setStatusCode(400);
@@ -171,7 +178,14 @@ public class CourseController {
             message.append("At least 26 credits excluding dissertation must be at the 700 level or higher");
             // return responseModel;
         }
-        message.append("/n");
+
+        if (thesisCredits < 18) {
+            responseModel.setStatusCode(400);
+            responseModel.setErrorMessage("At least 18 credits must be in Doctoral Thesis");
+            message.append("At least 18 credits must be in Doctoral Thesis");
+            // return responseModel;
+        }
+         
 
         // // Check GPA in each area
         // if (programOfStudy.getMajorGPA() < 3.0 || programOfStudy.getMinorGPA() < 3.0
@@ -197,6 +211,10 @@ public class CourseController {
 
         if(message.isEmpty()){
             message = message.append("Sucess!!!");
+            responseModel.setStatusCode(200);
+            responseModel.setErrorMessage(message.toString());
+            return responseModel;
+
         }
         // responseModel.setStatusCode(200);
         // responseModel.setErrorMessage("Program of Study form fulfills all credit requirement");
