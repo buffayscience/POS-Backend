@@ -120,8 +120,8 @@ public class CourseController {
         // This is the basic check that needs to be satisfied first return here if check fails
         if (totalCredits < 66) {
             responseModel.setStatusCode(400);
-            responseModel.setErrorMessage("Total credits must be atleast 66");
-            message.append("Total credits must be atleast 66");
+            responseModel.setErrorMessage("Total credits must be atleast 66 ");
+            message.append("Total credits must be atleast 66 \n");
             // return responseModel;
         }
          
@@ -130,7 +130,7 @@ public class CourseController {
         if (majorCredits < 21) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("At least 21 credits must be in the major area");
-            message.append("At least 21 credits must be in the major area");
+            message.append("At least 21 credits must be in the major area \n ");
             // return responseModel;
 
         }
@@ -139,8 +139,8 @@ public class CourseController {
         // Check minor area credits
         if (minorCredits < 9) {
             responseModel.setStatusCode(400);
-            responseModel.setErrorMessage("At least 9 credits must be in the minor area");
-            message.append("At least 9 credits must be in the minor area");
+            responseModel.setErrorMessage("At least 9 credits must be in the minor area ");
+            message.append("At least 9 credits must be in the minor area \n ");
             // return responseModel;
         }
          
@@ -149,7 +149,7 @@ public class CourseController {
         if (mathCredits < 6) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("At least 6 credits must be in math/quantitative methods");
-            message.append("At least 6 credits must be in math/quantitative methods");
+            message.append("At least 6 credits must be in math/quantitative methods \n ");
             // return responseModel;
         }
          
@@ -160,7 +160,7 @@ public class CourseController {
             responseModel.setStatusCode(400);
             responseModel
                     .setErrorMessage("Must have completed the Seminar Course");
-                    message.append("Must have completed the Seminar Course");
+                    message.append("Must have completed the Seminar Course \n ");
             // return responseModel;
 
         }
@@ -168,21 +168,21 @@ public class CourseController {
         if (mastersCredits > 33) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("Only upto 33 credits can be transferred from Master's Program");
-            message.append("Only upto 33 credits can be transferred from Master's Program");
+            message.append("Only upto 33 credits can be transferred from Master's Program \n ");
         }
          
 
         if (num700LevelCredits < 26) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("At least 26 credits must be at the 700 level or higher");
-            message.append("At least 26 credits excluding dissertation must be at the 700 level or higher");
+            message.append("At least 26 credits excluding dissertation must be at the 700 level or higher \n ");
             // return responseModel;
         }
 
         if (thesisCredits < 18) {
             responseModel.setStatusCode(400);
             responseModel.setErrorMessage("At least 18 credits must be in Doctoral Thesis");
-            message.append("At least 18 credits must be in Doctoral Thesis");
+            message.append("At least 18 credits must be in Doctoral Thesis \n ");
             // return responseModel;
         }
          
