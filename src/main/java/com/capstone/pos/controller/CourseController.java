@@ -116,6 +116,8 @@ public class CourseController {
 
         }
 
+     
+
         // Check total credit hours
         // This is the basic check that needs to be satisfied first return here if check fails
         if (totalCredits < 66) {
@@ -124,7 +126,8 @@ public class CourseController {
             message.append("Total credits must be atleast 66 \n");
             // return responseModel;
         }
-         
+
+      
 
         // Check major area credits
         if (majorCredits < 21) {
@@ -187,35 +190,18 @@ public class CourseController {
         }
          
 
-        // // Check GPA in each area
-        // if (programOfStudy.getMajorGPA() < 3.0 || programOfStudy.getMinorGPA() < 3.0
-        // || programOfStudy.getMathGPA() < 3.0 || programOfStudy.getEthicsGPA() < 3.0)
-        // {
-        // return ResponseEntity.badRequest().body("GPA must be at least 3.0 in all
-        // areas");
-        // }
 
-        // Check for valid major area
-        // if (!isValidMajorArea(programOfStudy.getMajorArea())) {
-        // return ResponseEntity.badRequest().body("Invalid major area: " +
-        // programOfStudy.getMajorArea());
-        // }
-
-        // Check for valid minor area
-        // if (!isValidMinorArea(programOfStudy.getMinorArea())) {
-        // return ResponseEntity.badRequest().body("Invalid minor area: " +
-        // programOfStudy.getMinorArea());
-        // }
         responseModel.setStatusCode(400);
         responseModel.setErrorMessage(message.toString());
 
         if(message.isEmpty()){
-            message = message.append("Sucess!!!");
+            message = message.append("Your POS form fulfills all credit requirements!!!");
             responseModel.setStatusCode(200);
             responseModel.setErrorMessage(message.toString());
             return responseModel;
 
         }
+        
         // responseModel.setStatusCode(200);
         // responseModel.setErrorMessage("Program of Study form fulfills all credit requirement");
 
